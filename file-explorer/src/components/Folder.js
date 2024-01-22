@@ -4,7 +4,7 @@ const Folder = ({ handleInsertNode, explorerData }) => {
    const [expand, setExpand] = useState(false);
    const [showInput, setShowInput] = useState({
     visible: false,
-    fileType : null
+    isFolder : null
    });
 
    const handleNewFolder = (e, isFolder) => {
@@ -15,7 +15,7 @@ const Folder = ({ handleInsertNode, explorerData }) => {
 
    const onAddFolder = (e) => {
      if(e.keyCode === 13 && e.target.value){
-        handleInsertNode(explorerData.id, e.target.value, showInput.fileType);
+        handleInsertNode(explorerData.id, e.target.value, showInput.isFolder);
         setShowInput({...showInput, visible: false});
      }
    }
