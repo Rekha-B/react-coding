@@ -1,0 +1,23 @@
+body {
+  font-family: sans-serif;
+}
+.App{
+  text-align: center;
+}
+input {
+  width: 500px;
+  padding:5px;
+}
+.results-container{
+  width:500px;
+  margin:auto;
+  border:1px solid black;
+  padding:5px;
+  text-align: left;
+  height:auto;
+  overflow-y:scroll;
+}
+.result{
+  display: block;
+  padding:5px;
+}
