@@ -1,29 +1,29 @@
-export const explorer = {
+export const explorer = [{
     id : '1',
     name: 'root',
     isFolder: true,
-    items : [ 
+    children : [ 
         {
             id : '2',
             name: 'public',
             isFolder: true,
-            items: [
+            children: [
                 {
                     id : '3',
                     name: 'public nested 1',
                     isFolder: true,
-                    items: [
+                    children: [
                         {
                             id : '4',
                             name: 'index.html',
                             isFolder: false,
-                            items: []
+                            children: []
                         },
                         {
                             id : '5',
                             name: 'hello.html',
                             isFolder: false,
-                            items: []
+                            children: []
                         }
                     ]
                 },
@@ -31,7 +31,7 @@ export const explorer = {
                     id : '6',
                     name: 'public_nested_file.js',
                     isFolder: false,
-                    items: []
+                    children: []
                 }
             ]
         },
@@ -39,24 +39,24 @@ export const explorer = {
            id: '7',
            name: 'src',
            isFolder: true,
-           items: [
+           children: [
             {
                 id: '8',
                 name: 'App.js',
                 isFolder: false,
-                items: []
+                children: []
             },
             {
                 id: '9',
                 name: 'Index.js',
                 isFolder: false,
-                items: []
+                children: []
             },
             {
                 id: '10',
                 name: 'styles.css',
                 isFolder: false,
-                items: []
+                children: []
             }
            ]
         },
@@ -64,7 +64,7 @@ export const explorer = {
             id:'11',
             name: 'package.json',
             isFolder: false,
-            items: []
+            children: []
         }
     ]
-}
+}]
