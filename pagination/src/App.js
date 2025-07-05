@@ -1,40 +1,44 @@
-import './App.css';
-import { useState, useEffect} from "react";
+import { useEffect , useState} from "react"
+import ProductCard from "./ProductCard";
+import PaginationComp from "./PaginationComp";
+import "./App.css"
+const App = () => {
 
-function App() {
-  const [input, setInput] = useState('');
-
-  const [results, setResults] = useState([]);
-  const [showResults, setShowResults] = useState(false);
-  const [cache, setCache] = useState({});
+  const [products, setProducts] = useState([]);
+  const [ currentPage, setCurrentPage] = useState(0);
   const fetchData = async() => {
-    if(cache[input]){
-      console.log("Cache hit", input);
-      setResults(cache[input]);
-      return;
-    }
-    const res = await fetch(`https://dummyjson.com/recipes/search?q=${input}`);
-    const data = await res.json();
-    setResults(data?.recipes);
-    setCache(prev => ({...prev, [input]: data?.recipes}));
+     const data = await fetch(`https://dummyjson.com/products?limit=500`);
+     const results = await data.json();
+     console.log("resuts", results);
+     setProducts(results?.products);
   }
+
   useEffect(() => {
-    const timerID =  setTimeout(() => fetchData(), 500);
-    return () => {
-      clearTimeout(timerID);
-        
-    }
-  },[input])
+     fetchData();
+  },[]);
+
+  const PAGE_SIZE = 10;
+  const start = currentPage * PAGE_SIZE;
+  const end = start + PAGE_SIZE;
+  const totalPages = Math.ceil(products.length / PAGE_SIZE);
+
+  const onHandleNext = () => {
+    console.log("calling data");
+    setCurrentPage((prev) => prev + 1);
+  }
+
+  const onHandlePrev = () => {
+    setCurrentPage((prev) => prev - 1);
+  }
   return (
     <div id="container">
-        <h1>AutoComplete</h1>
-        <input type="text" onChange={(e) => setInput(e.target.value)} onFocus={() => setShowResults(true)} onBlur={() => setShowResults(false)}/>
-        {showResults && <div className="results-container">
-        {results.map(item => (
-            <span className="result" key={item.id}>{item.name}</span>
-        ))}
-        </div>}
-
+      <h1>Pagination</h1>
+      <PaginationComp totalPages={totalPages} size={PAGE_SIZE} currentPage={currentPage} onHandleNext={onHandleNext} onHandlePrev={onHandlePrev}/>
+      <div className="products-container">
+      {products.slice(start,end).map(product => (
+        <ProductCard product={product} />
+      ))}
+      </div>
     </div>
   )
 }
