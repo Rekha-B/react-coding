@@ -1,0 +1,74 @@
+import { useState } from "react";
+const Rating = ({ stars }) => {
+  const [rating, setRating] = useState(0);
+  const [hover, setHover] = useState(0);
+
+  const getStarHoverValue = (event, index) => {
+    const { offsetX, target } = event.nativeEvent;
+    const isHalf = offsetX < target.offsetWidth / 2; // Check if cursor is on the left side of the star
+    return isHalf ? index - 0.5 : index;
+  };
+  onHandleMouseMove = (event, index) => {
+    setHover(getStarHoverValue(event, index));
+  };
+
+  onHandleClick = (event, index) => {
+    setRating(getStarHoverValue(event, index));
+  };
+  const renderStars = () => {
+    const res = [];
+    for (let i = 1; i <= stars; i++) {
+      const index = i + 1;
+      const isFull = hover >= index || rating >= index;
+      const isHalf = hover === index - 0.5 || rating === index - 0.5;
+      res.push(
+        <div
+          key={i}
+          className="star-container"
+          onMouseMove={(e) => onHandleMouseMove(e, index)}
+          onClick={(e) => onHandleClick(e, index)}
+        >
+          <span
+            className={`star ${isFull ? "full" : isHalf ? "half" : "empty"}`}
+          >
+            &#9734;
+          </span>
+        </div>
+      );
+    }
+    return res;
+  };
+  return <div className="star-rating">{renderStars()}</div>;
+};
+
+export default Rating;
+
+
+
+.App {
+  font-family: sans-serif;
+  text-align: center;
+}
+.star-rating {
+  display: flex;
+  column-gap: 10px;
+  font-size: 50px;
+}
+.star {
+  cursor: pointer;
+}
+
+.star.full {
+  color: #f5c518;
+  /* Gold color for full stars */
+}
+
+.star.half {
+  background: linear-gradient(90deg, #f5c518 50%, #000 50%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.star.empty {
+  color: #000;
+}
